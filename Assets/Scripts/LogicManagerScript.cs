@@ -7,12 +7,17 @@ public class LogicManagerScript : MonoBehaviour
     public int playerScore;
     public Text scoreText;
     public GameObject gameOverScreen;
+    public BirdScript birdScript;
 
     [ContextMenu("Add score")]
     public void addScore(int scoreToAdd)
     {
-        this.playerScore += scoreToAdd;
-        this.scoreText.text = playerScore.ToString();
+        if (this.birdScript.GetIsBirdAlive())
+        {
+            this.playerScore += scoreToAdd;
+            this.scoreText.text = playerScore.ToString();
+        }
+
     }
 
     public void restartGame()
