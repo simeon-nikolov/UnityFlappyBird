@@ -8,8 +8,12 @@ public class BirdScript : MonoBehaviour
 
     public LogicManagerScript logicManager;
     public Rigidbody2D birdRigidbody;
+    public GameObject wingUp;
+    public GameObject wingDown;
+
     public float flapStrength = 16;
     private bool isBirdAlive = true;
+    private float flapTimer = 0.0f;
 
     public bool GetIsBirdAlive()
     {
@@ -28,6 +32,7 @@ public class BirdScript : MonoBehaviour
         if (this.CheckIsJumpPressed() && this.isBirdAlive)
         {
             this.birdRigidbody.linearVelocity = Vector2.up * this.flapStrength;
+            this.FlapWings();
         }
 
         if (this.CheckIsBirdOutOfBounds())
@@ -40,6 +45,29 @@ public class BirdScript : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        if (this.flapTimer > 0f)
+        {
+            this.flapTimer -= Time.deltaTime;
+
+            if (this.flapTimer <= 0f)
+            {
+                this.SetWingsToNormal();
+            }
+        }
+    }
+
+    private void FlapWings()
+    {
+        this.wingUp.SetActive(false);
+        this.wingDown.SetActive(true);
+        this.flapTimer = 0.4f;
+    }
+
+    private void SetWingsToNormal()
+    {
+        this.wingUp.SetActive(true);
+        this.wingDown.SetActive(false);
     }
 
     private bool CheckIsJumpPressed()
