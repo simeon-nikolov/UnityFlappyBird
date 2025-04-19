@@ -8,6 +8,7 @@ public class BirdScript : MonoBehaviour
 
     public LogicManagerScript logicManager;
     public Rigidbody2D birdRigidbody;
+    public AudioSource wingFlapAudio;
     public GameObject wingUp;
     public GameObject wingDown;
 
@@ -59,6 +60,8 @@ public class BirdScript : MonoBehaviour
 
     private void FlapWings()
     {
+        this.wingFlapAudio.time = 0.2f;
+        this.wingFlapAudio.Play();
         this.wingUp.SetActive(false);
         this.wingDown.SetActive(true);
         this.flapTimer = 0.4f;
