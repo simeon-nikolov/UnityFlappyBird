@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class BirdScript : MonoBehaviour
@@ -9,8 +10,7 @@ public class BirdScript : MonoBehaviour
     public LogicManagerScript logicManager;
     public Rigidbody2D birdRigidbody;
     public AudioSource wingFlapAudio;
-    public GameObject wingUp;
-    public GameObject wingDown;
+    public Animator animator;
 
     public float flapStrength = 16;
     private bool isBirdAlive = true;
@@ -47,30 +47,40 @@ public class BirdScript : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        if (this.flapTimer > 0f)
-        {
-            this.flapTimer -= Time.deltaTime;
-
-            if (this.flapTimer <= 0f)
-            {
-                this.SetWingsToNormal();
-            }
-        }
+        this.UpdateFlapping();
     }
 
     private void FlapWings()
     {
         this.wingFlapAudio.time = 0.2f;
         this.wingFlapAudio.Play();
-        this.wingUp.SetActive(false);
-        this.wingDown.SetActive(true);
         this.flapTimer = 0.4f;
+        StartCoroutine(AnimateFlapping());
     }
 
-    private void SetWingsToNormal()
+    IEnumerator AnimateFlapping()
     {
-        this.wingUp.SetActive(true);
-        this.wingDown.SetActive(false);
+        this.animator.SetBool("isFlapping", false);
+        yield return new WaitForSeconds(0.1f);
+        this.animator.SetBool("isFlapping", true);
+    }
+
+    private void UpdateFlapping()
+    {
+        if (this.flapTimer > 0f)
+        {
+            this.flapTimer -= Time.deltaTime;
+
+            if (this.flapTimer <= 0f)
+            {
+                StopFlappingAnimation();
+            }
+        }
+    }
+
+    private void StopFlappingAnimation()
+    {
+        this.animator.SetBool("isFlapping", false);
     }
 
     private bool CheckIsJumpPressed()
