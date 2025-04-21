@@ -52,6 +52,7 @@ public class BirdScript : MonoBehaviour
 
     private void FlapWings()
     {
+        this.wingFlapAudio.Stop();
         this.wingFlapAudio.time = 0.2f;
         this.wingFlapAudio.Play();
         this.flapTimer = 0.4f;
@@ -110,6 +111,6 @@ public class BirdScript : MonoBehaviour
     private void Die()
     {
         this.isBirdAlive = false;
-        this.logicManager.gameOver();
+        this.logicManager.GameOver();
     }
 }

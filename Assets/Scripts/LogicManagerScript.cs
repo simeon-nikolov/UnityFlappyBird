@@ -19,7 +19,7 @@ public class LogicManagerScript : MonoBehaviour
     }
 
     [ContextMenu("Add score")]
-    public void addScore(int scoreToAdd)
+    public void AddScore(int scoreToAdd)
     {
         if (this.birdScript.GetIsBirdAlive())
         {
@@ -30,12 +30,12 @@ public class LogicManagerScript : MonoBehaviour
 
     }
 
-    public void restartGame()
+    public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    public void gameOver()
+    public void GameOver()
     {
         this.gameOverScreen.SetActive(true);
 
@@ -55,5 +55,15 @@ public class LogicManagerScript : MonoBehaviour
     private void UpdateHighScoreText(int highScore)
     {
         this.highScoreText.text = "High score: " + this.highScore;
+    }
+
+    public void QuitGame()
+    {
+#if UNITY_STANDALONE
+        Application.Quit();
+#endif
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
     }
 }

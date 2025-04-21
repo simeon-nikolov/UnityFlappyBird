@@ -21,7 +21,7 @@ public class PipeMiddleScript : MonoBehaviour
     {
         if (collision.gameObject.layer == BIRD_LAYER)
         {
-            this.logicManager.addScore(1);
+            this.logicManager.AddScore(1);
         }
     }
 }
